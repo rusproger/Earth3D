@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/earth.dds</file>
+    </qresource>
+</RCC>
