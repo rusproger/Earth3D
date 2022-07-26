@@ -16,28 +16,28 @@
 #define M_DEG_TO_RAD  (M_PI/180.0)
 #define M_RAD_TO_DEG  (180.0/M_PI)
 
-// Подставлены координаты центра Москвы
+// РџРѕРґСЃС‚Р°РІР»РµРЅС‹ РєРѕРѕСЂРґРёРЅР°С‚С‹ С†РµРЅС‚СЂР° РњРѕСЃРєРІС‹
 // https://ru.wikipedia.org/wiki/%D0%93%D0%B5%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B
-// В сентябре 2014 года в честь 867-летия Москвы специалисты Московского государственного университета
-// геодезии и картографии (МИИГАиК) определили координаты географического центра Москвы (по центру масс всех частей города,
-// с учётом Зеленограда): 55,558741° с. ш., 37,378847° в. д.
+// Р’ СЃРµРЅС‚СЏР±СЂРµ 2014 РіРѕРґР° РІ С‡РµСЃС‚СЊ 867-Р»РµС‚РёСЏ РњРѕСЃРєРІС‹ СЃРїРµС†РёР°Р»РёСЃС‚С‹ РњРѕСЃРєРѕРІСЃРєРѕРіРѕ РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅРѕРіРѕ СѓРЅРёРІРµСЂСЃРёС‚РµС‚Р°
+// РіРµРѕРґРµР·РёРё Рё РєР°СЂС‚РѕРіСЂР°С„РёРё (РњРРР“РђРёРљ) РѕРїСЂРµРґРµР»РёР»Рё РєРѕРѕСЂРґРёРЅР°С‚С‹ РіРµРѕРіСЂР°С„РёС‡РµСЃРєРѕРіРѕ С†РµРЅС‚СЂР° РњРѕСЃРєРІС‹ (РїРѕ С†РµРЅС‚СЂСѓ РјР°СЃСЃ РІСЃРµС… С‡Р°СЃС‚РµР№ РіРѕСЂРѕРґР°,
+// СЃ СѓС‡С‘С‚РѕРј Р—РµР»РµРЅРѕРіСЂР°РґР°): 55,558741В° СЃ. С€., 37,378847В° РІ. Рґ.
 //
 #define SHIRMPSK (55.558741*M_DEG_TO_RAD)
 #define DOLGMPSK (37.378847*M_DEG_TO_RAD)
 
-// Разбиение глобуса
+// Р Р°Р·Р±РёРµРЅРёРµ РіР»РѕР±СѓСЃР°
 #define LG_SLICE_CNT 64
 
 
-// Размер точки и ширина линии
+// Р Р°Р·РјРµСЂ С‚РѕС‡РєРё Рё С€РёСЂРёРЅР° Р»РёРЅРёРё
 #define POINT_SIZE   5.0f
 #define LINE_WIDTH   1.0f
 
 
-// Класс 3D камеры
-// Реализовано движение центра Земли в прямоугольной системе координат
-// и вращение Земли вокруг центра
-// Использована статья nehe "ArcBall Rotation" lesson 48
+// РљР»Р°СЃСЃ 3D РєР°РјРµСЂС‹
+// Р РµР°Р»РёР·РѕРІР°РЅРѕ РґРІРёР¶РµРЅРёРµ С†РµРЅС‚СЂР° Р—РµРјР»Рё РІ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕР№ СЃРёСЃС‚РµРјРµ РєРѕРѕСЂРґРёРЅР°С‚
+// Рё РІСЂР°С‰РµРЅРёРµ Р—РµРјР»Рё РІРѕРєСЂСѓРі С†РµРЅС‚СЂР°
+// РСЃРїРѕР»СЊР·РѕРІР°РЅР° СЃС‚Р°С‚СЊСЏ nehe "ArcBall Rotation" lesson 48
 // http://nehe.gamedev.net/tutorial/arcball_rotation/19003/
 // http://rainwarrior.ca/dragon/arcball.html
 
@@ -60,7 +60,7 @@ M3D_CAMERA::~M3D_CAMERA()
 }
 
 
-// Генерация кватерниона поворота
+// Р“РµРЅРµСЂР°С†РёСЏ РєРІР°С‚РµСЂРЅРёРѕРЅР° РїРѕРІРѕСЂРѕС‚Р°
 void M3D_CAMERA::rotateToQuat4d(Vect3d *v0, Vect3d *v1, Quat4d *q)
 {
     GLdouble n;
@@ -71,7 +71,7 @@ void M3D_CAMERA::rotateToQuat4d(Vect3d *v0, Vect3d *v1, Quat4d *q)
     n = sqrt((v0->x*v0->x + v0->y*v0->y + v0->z*v0->z)*(v1->x*v1->x + v1->y*v1->y + v1->z*v1->z));
     if (n > MIN_VALUE)
     {
-        // Рассматриваем частный случай, угол между векторами строго меньше 180 град
+        // Р Р°СЃСЃРјР°С‚СЂРёРІР°РµРј С‡Р°СЃС‚РЅС‹Р№ СЃР»СѓС‡Р°Р№, СѓРіРѕР» РјРµР¶РґСѓ РІРµРєС‚РѕСЂР°РјРё СЃС‚СЂРѕРіРѕ РјРµРЅСЊС€Рµ 180 РіСЂР°Рґ
         q->x  = (v0->y * v1->z - v1->y * v0->z) / n;
         q->y  = (v1->x * v0->z - v0->x * v1->z) / n;
         q->z  = (v0->x * v1->y - v1->x * v0->y) / n;
@@ -79,7 +79,7 @@ void M3D_CAMERA::rotateToQuat4d(Vect3d *v0, Vect3d *v1, Quat4d *q)
     }
 }
 
-// Умножение кватернионов. Результат сохраняется в q1
+// РЈРјРЅРѕР¶РµРЅРёРµ РєРІР°С‚РµСЂРЅРёРѕРЅРѕРІ. Р РµР·СѓР»СЊС‚Р°С‚ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РІ q1
 void M3D_CAMERA::MulQuat4d(Quat4d *q0, Quat4d *q1)
 {
     GLdouble A, B, C, D, E, F, G, H;
@@ -102,7 +102,7 @@ void M3D_CAMERA::MulQuat4d(Quat4d *q0, Quat4d *q1)
     *q1 = r;
 }
 
-// Генерация матрицы поворота 3х3 из кватерниона
+// Р“РµРЅРµСЂР°С†РёСЏ РјР°С‚СЂРёС†С‹ РїРѕРІРѕСЂРѕС‚Р° 3С…3 РёР· РєРІР°С‚РµСЂРЅРёРѕРЅР°
 void M3D_CAMERA::Quat4dToMatrix3d(Quat4d *q, Matrix3d *m)
 {
     GLdouble n, s;
@@ -124,7 +124,7 @@ void M3D_CAMERA::Quat4dToMatrix3d(Quat4d *q, Matrix3d *m)
     m->xy =         xy + wz;  m->yy = 1.0f - (xx + zz); m->zy =         yz - wx;
     m->xz =         xz - wy;  m->yz =         yz + wx;  m->zz = 1.0f - (xx + yy);
 }
-// Умножение матриц 3х3. Результат сохраняется в m1
+// РЈРјРЅРѕР¶РµРЅРёРµ РјР°С‚СЂРёС† 3С…3. Р РµР·СѓР»СЊС‚Р°С‚ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РІ m1
 void M3D_CAMERA::MulMatrix3d(Matrix3d *m0, Matrix3d *m1)
 {
     Matrix3d r;
@@ -145,7 +145,7 @@ void M3D_CAMERA::MulMatrix3d(Matrix3d *m0, Matrix3d *m1)
     *m1 = r;
 
 }
-// Добавление составляющих вращения в матрицу 4х4 из матрицы 3х3
+// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРѕСЃС‚Р°РІР»СЏСЋС‰РёС… РІСЂР°С‰РµРЅРёСЏ РІ РјР°С‚СЂРёС†Сѓ 4С…4 РёР· РјР°С‚СЂРёС†С‹ 3С…3
 void M3D_CAMERA::Matrix4dRotateFromMatrix3d(Matrix4d *m4, Matrix3d *m3)
 {
     GLdouble scale;
@@ -161,7 +161,7 @@ void M3D_CAMERA::Matrix4dRotateFromMatrix3d(Matrix4d *m4, Matrix3d *m3)
     m4->zx = m3->zx * scale; m4->zy = m3->zy * scale; m4->zz = m3->zz * scale;
 }
 
-// Добавление составляющих параллельного переноса в матрицу 4х4 из вектора
+// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРѕСЃС‚Р°РІР»СЏСЋС‰РёС… РїР°СЂР°Р»Р»РµР»СЊРЅРѕРіРѕ РїРµСЂРµРЅРѕСЃР° РІ РјР°С‚СЂРёС†Сѓ 4С…4 РёР· РІРµРєС‚РѕСЂР°
 void M3D_CAMERA::Matrix4dTranslateFromVect3d(Matrix4d *m4, Vect3d *v3)
 {
     m4->tx = - v3->x;
@@ -175,24 +175,24 @@ void M3D_CAMERA::initCamera(GLdouble scnx, GLdouble scny, GLdouble lat, GLdouble
 
     alt = qBound(LG_NEAR_DIST, alt, LG_FAR_DIST - 2.0);
 
-    // Инициализация вектора положения центра Земли (ось Z на нас поэтому "-")
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РІРµРєС‚РѕСЂР° РїРѕР»РѕР¶РµРЅРёСЏ С†РµРЅС‚СЂР° Р—РµРјР»Рё (РѕСЃСЊ Z РЅР° РЅР°СЃ РїРѕСЌС‚РѕРјСѓ "-")
     scnmove.x  = scnx;
     scnmove.y  = scny;
     scnmove.z  = 1.0 + alt;
 
-    // Поворот Земли вокрух центра
+    // РџРѕРІРѕСЂРѕС‚ Р—РµРјР»Рё РІРѕРєСЂСѓС… С†РµРЅС‚СЂР°
     Qlat.x = sin(lat/2.0); Qlat.y = 0.0;           Qlat.z = 0.0; Qlat.w = cos(lat/2.0);
     Qlon.x = 0.0;          Qlon.y = -sin(lon/2.0); Qlon.z = 0.0; Qlon.w = cos(lon/2.0);
     MulQuat4d(&Qlat, &Qlon);
     Quat4dToMatrix3d(&Qlon, &locrotate);
 
-    // Инициализация матрицы
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°С‚СЂРёС†С‹
     matrix.xx = 1.0; matrix.xy = 0.0; matrix.xz = 0.0; matrix.tx = 0.0;
     matrix.yx = 0.0; matrix.yy = 1.0; matrix.yz = 0.0; matrix.ty = 0.0;
     matrix.zx = 0.0; matrix.zy = 0.0; matrix.zz = 1.0; matrix.tz = 0.0;
     matrix.xw = 0.0; matrix.yw = 0.0; matrix.zw = 0.0; matrix.tw = 1.0;
 
-    // Применение поворота и сдвига начала координат к матрице
+    // РџСЂРёРјРµРЅРµРЅРёРµ РїРѕРІРѕСЂРѕС‚Р° Рё СЃРґРІРёРіР° РЅР°С‡Р°Р»Р° РєРѕРѕСЂРґРёРЅР°С‚ Рє РјР°С‚СЂРёС†Рµ
     Matrix4dTranslateFromVect3d(&matrix,&scnmove);
     Matrix4dRotateFromMatrix3d (&matrix,&locrotate);
 }
@@ -214,7 +214,7 @@ void M3D_CAMERA::mousePressEvent(QMouseEvent *event)
       setCursor(Qt::ClosedHandCursor);
 }
 
-// Относительные координаты точки на сцене
+// РћС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё РЅР° СЃС†РµРЅРµ
 QPointF M3D_CAMERA::MouseProjection(const QPoint &pos)
 {
     GLdouble ratio = (GLdouble)width() / height(),
@@ -227,7 +227,7 @@ QPointF M3D_CAMERA::MouseProjection(const QPoint &pos)
 
 void M3D_CAMERA::ProjectionToVect3d(QPointF &proj, Vect3d &vec, GLdouble Radius)
 {
-    // Решение задачи о поиске точки на сфере (x,y,z) c центром (xc,yc,zc) и радиусом R по относительным экранным координатам курсора (xp,yp):
+    // Р РµС€РµРЅРёРµ Р·Р°РґР°С‡Рё Рѕ РїРѕРёСЃРєРµ С‚РѕС‡РєРё РЅР° СЃС„РµСЂРµ (x,y,z) c С†РµРЅС‚СЂРѕРј (xc,yc,zc) Рё СЂР°РґРёСѓСЃРѕРј R РїРѕ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Рј СЌРєСЂР°РЅРЅС‹Рј РєРѕРѕСЂРґРёРЅР°С‚Р°Рј РєСѓСЂСЃРѕСЂР° (xp,yp):
     //
     // (xp*(zc-z)+xc)^2 + (yp*(zc-z)+yc)^2 + z^2 = R^2
 
@@ -247,11 +247,11 @@ void M3D_CAMERA::ProjectionToVect3d(QPointF &proj, Vect3d &vec, GLdouble Radius)
     }
     else
     {
-        // Решение задачи о поиске вектора проходящего через точку на крае видимого диска сферы радиусом R и центр сферы (xc,yc,zc)
-        // по относительным экранным координатам курсора (xp,yp):
-        // Искомый вектор лежит на поверхности конуса. Используем св-ва скалярного произведения:
+        // Р РµС€РµРЅРёРµ Р·Р°РґР°С‡Рё Рѕ РїРѕРёСЃРєРµ РІРµРєС‚РѕСЂР° РїСЂРѕС…РѕРґСЏС‰РµРіРѕ С‡РµСЂРµР· С‚РѕС‡РєСѓ РЅР° РєСЂР°Рµ РІРёРґРёРјРѕРіРѕ РґРёСЃРєР° СЃС„РµСЂС‹ СЂР°РґРёСѓСЃРѕРј R Рё С†РµРЅС‚СЂ СЃС„РµСЂС‹ (xc,yc,zc)
+        // РїРѕ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Рј СЌРєСЂР°РЅРЅС‹Рј РєРѕРѕСЂРґРёРЅР°С‚Р°Рј РєСѓСЂСЃРѕСЂР° (xp,yp):
+        // РСЃРєРѕРјС‹Р№ РІРµРєС‚РѕСЂ Р»РµР¶РёС‚ РЅР° РїРѕРІРµСЂС…РЅРѕСЃС‚Рё РєРѕРЅСѓСЃР°. РСЃРїРѕР»СЊР·СѓРµРј СЃРІ-РІР° СЃРєР°Р»СЏСЂРЅРѕРіРѕ РїСЂРѕРёР·РІРµРґРµРЅРёСЏ:
         // (xp*(zc-z)+xc)*xc + (yp*(zc-z)+yc)*yc + z*zc = R*sqrt((xp*(zc-z)+xc)^2 + (yp*(zc-z)+yc)^2 + z^2)
-        // Формулы получены с помощью ресурса Wolfram Alfa:
+        // Р¤РѕСЂРјСѓР»С‹ РїРѕР»СѓС‡РµРЅС‹ СЃ РїРѕРјРѕС‰СЊСЋ СЂРµСЃСѓСЂСЃР° Wolfram Alfa:
         // simplify ((x*(C-z)+A)*A + (y*(C-z)+B)*B + z*C)^2-R*R*((x*(C-z)+A)^2 + (y*(C-z)+B)^2 + z^2)=0
         A = scnmove.x*scnmove.x*proj.x()*proj.x()
                 + 2*scnmove.x*scnmove.y*proj.x()*proj.y()
@@ -307,13 +307,13 @@ void M3D_CAMERA::moveScene(QMouseEvent *event)
     Vect3d  vec;
     QPointF LocalPt = MouseProjection(event->pos());
 
-    // Векторное представление точки начала движения
+    // Р’РµРєС‚РѕСЂРЅРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ С‚РѕС‡РєРё РЅР°С‡Р°Р»Р° РґРІРёР¶РµРЅРёСЏ
     ProjectionToVect3d(MousePt, vec, LG_RADIUS);
 
     scnmove.x  += (LocalPt.x() - MousePt.x()) * (vec.z - scnmove.z);
     scnmove.y  += (LocalPt.y() - MousePt.y()) * (vec.z - scnmove.z);
 
-    // Проверка что камера расположена на расстоянии LG_RADIUS+LG_NEAR_DIST от центра сферы
+    // РџСЂРѕРІРµСЂРєР° С‡С‚Рѕ РєР°РјРµСЂР° СЂР°СЃРїРѕР»РѕР¶РµРЅР° РЅР° СЂР°СЃСЃС‚РѕСЏРЅРёРё LG_RADIUS+LG_NEAR_DIST РѕС‚ С†РµРЅС‚СЂР° СЃС„РµСЂС‹
     GLdouble Z2 = ((LG_RADIUS+LG_NEAR_DIST)*(LG_RADIUS+LG_NEAR_DIST)) - scnmove.x*scnmove.x - scnmove.y*scnmove.y,
              Z  = Z2 > 0? sqrt(Z2) : 0.0;
 
@@ -330,10 +330,10 @@ void M3D_CAMERA::rotateLocal(QMouseEvent *event)
     Vect3d   v0, v1;
     QPointF  LocalPt  = MouseProjection(event->pos());
 
-    // Векторное представление точки начала вращения
+    // Р’РµРєС‚РѕСЂРЅРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ С‚РѕС‡РєРё РЅР°С‡Р°Р»Р° РІСЂР°С‰РµРЅРёСЏ
     ProjectionToVect3d(MousePt, v0, LG_RADIUS);
 
-    // Векторное представление точки окончания вращения (относительно центра Земли)
+    // Р’РµРєС‚РѕСЂРЅРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ С‚РѕС‡РєРё РѕРєРѕРЅС‡Р°РЅРёСЏ РІСЂР°С‰РµРЅРёСЏ (РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ С†РµРЅС‚СЂР° Р—РµРјР»Рё)
     ProjectionToVect3d(LocalPt, v1, LG_RADIUS);
 
     rotateToQuat4d(&v0, &v1, &q);
@@ -392,7 +392,7 @@ void M3D_CAMERA::resizeGL(int w, int h)
 
     glViewport(0, 0, w, h);
 
-    // Генерация матрицы проекций
+    // Р“РµРЅРµСЂР°С†РёСЏ РјР°С‚СЂРёС†С‹ РїСЂРѕРµРєС†РёР№
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glFrustum(-fW, fW, -fH, fH, LG_NEAR_DIST, LG_FAR_DIST);
@@ -400,7 +400,7 @@ void M3D_CAMERA::resizeGL(int w, int h)
 
 void M3D_CAMERA::setModelViewMatrix()
 {
-    // Генерация модельно-видовой матрицы
+    // Р“РµРЅРµСЂР°С†РёСЏ РјРѕРґРµР»СЊРЅРѕ-РІРёРґРѕРІРѕР№ РјР°С‚СЂРёС†С‹
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -413,7 +413,7 @@ void M3D_CAMERA::setModelViewMatrix()
 CMap3d::CMap3d(QWidget *parent) : M3D_CAMERA(parent),
     earthText(0),glCompressedTexImage2D(NULL)
 {
-    setWindowTitle(tr("3D МОДЕЛЬ ЗЕМЛИ"));
+    setWindowTitle(tr("3D РњРћР”Р•Р›Р¬ Р—Р•РњР›Р"));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setMouseTracking(true);
     setFocusPolicy(Qt::StrongFocus);
@@ -426,7 +426,7 @@ CMap3d::CMap3d(QWidget *parent) : M3D_CAMERA(parent),
     normalVertexSphere.reserve(6*LG_SLICE_CNT*LG_SLICE_CNT);
     textureVertexSphere.reserve(4*LG_SLICE_CNT*LG_SLICE_CNT);
 
-    // Инициализация пользователяского интерфейса
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР°
     mapLayout = new QGridLayout(this);
     mapLayout->setContentsMargins(5, 5, 5, 5);
 
@@ -441,8 +441,8 @@ CMap3d::CMap3d(QWidget *parent) : M3D_CAMERA(parent),
 
     connect(menuButton, SIGNAL(toggled(bool)), SLOT(showButtons(bool)));
 
-    InsertButtons(show_light,true,tr("Освещение"),tr("освещение"));
-    InsertButtons(default_pos,false,tr("Начало"),tr("начальное состояние"));
+    InsertButtons(show_light,true,tr("РћСЃРІРµС‰РµРЅРёРµ"),tr("РѕСЃРІРµС‰РµРЅРёРµ"));
+    InsertButtons(default_pos,false,tr("РќР°С‡Р°Р»Рѕ"),tr("РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ"));
 
     visibleObjectsButton.value(default_pos)->setCheckable(false);
     connect(visibleObjectsButton.value(default_pos), SIGNAL(clicked()),this, SLOT(initPosition()));
@@ -470,10 +470,10 @@ void CMap3d::MESSAGE(QString text)
 
 void CMap3d::InsertButtons(const ObjectsVisibleOnMap key, bool value, QString name, QString text)
 {
-    // Создание и инициализация начального значения
+    // РЎРѕР·РґР°РЅРёРµ Рё РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РЅР°С‡Р°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ
     isVisibleObject.insert(key, value);
 
-    // Создание кнопки
+    // РЎРѕР·РґР°РЅРёРµ РєРЅРѕРїРєРё
     QPushButton* btn = new QPushButton(name, this);
 
     btn->hide();
@@ -481,11 +481,11 @@ void CMap3d::InsertButtons(const ObjectsVisibleOnMap key, bool value, QString na
     btn->setChecked(isVisibleObject.value(key));
     mapLayout->addWidget(btn, mapLayout->rowCount(), 1);
 
-    btn->setToolTip(tr("Отобразить на карте %1").arg(text));
-    btn->setStatusTip(tr("Отобразить на карте %1").arg(text));
+    btn->setToolTip(tr("РћС‚РѕР±СЂР°Р·РёС‚СЊ РЅР° РєР°СЂС‚Рµ %1").arg(text));
+    btn->setStatusTip(tr("РћС‚РѕР±СЂР°Р·РёС‚СЊ РЅР° РєР°СЂС‚Рµ %1").arg(text));
     visibleObjectsButton.insert(key, btn);
 
-    // Связывание сигнала от QPushButton с QSignalMapper
+    // РЎРІСЏР·С‹РІР°РЅРёРµ СЃРёРіРЅР°Р»Р° РѕС‚ QPushButton СЃ QSignalMapper
     connect(btn, SIGNAL(clicked()), visibleMapper, SLOT(map()));
     visibleMapper->setMapping(btn, key);
 }
@@ -539,53 +539,53 @@ void CMap3d::createSphere(GLdouble xc, GLdouble yc, GLdouble zc, GLdouble r)
         {
             // -pi .. +pi
             phi = -M_PI + i*stepAngle;
-            //X - вправо , Y - вверх , Z- на нас
+            //X - РІРїСЂР°РІРѕ , Y - РІРІРµСЂС… , Z- РЅР° РЅР°СЃ
 
-            // Координаты привязки
+            // РљРѕРѕСЂРґРёРЅР°С‚С‹ РїСЂРёРІСЏР·РєРё
             coordVertexSphere.push_back( xc + r * cos(theta+stepAngle) * sin(phi));
             coordVertexSphere.push_back( yc + r * sin(theta+stepAngle));
             coordVertexSphere.push_back( zc + r * cos(theta+stepAngle) * cos(phi));
-            // Нормаль
+            // РќРѕСЂРјР°Р»СЊ
             normalVertexSphere.push_back( cos(theta+stepAngle) * sin(phi));
             normalVertexSphere.push_back( sin(theta+stepAngle));
             normalVertexSphere.push_back( cos(theta+stepAngle) * cos(phi));
-            // Текстурные кординаты
+            // РўРµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕСЂРґРёРЅР°С‚С‹
             textureVertexSphere.push_back( i * stepTexture);
             textureVertexSphere.push_back( 2.0 * (j+1)* stepTexture);
 
-            // Координаты привязки
+            // РљРѕРѕСЂРґРёРЅР°С‚С‹ РїСЂРёРІСЏР·РєРё
             coordVertexSphere.push_back( xc + r * cos(theta) * sin(phi));
             coordVertexSphere.push_back( yc + r * sin(theta));
             coordVertexSphere.push_back( zc + r * cos(theta) * cos(phi));
-            // Нормаль
+            // РќРѕСЂРјР°Р»СЊ
             normalVertexSphere.push_back( cos(theta) * sin(phi));
             normalVertexSphere.push_back( sin(theta));
             normalVertexSphere.push_back( cos(theta) * cos(phi));
-            // Текстурные кординаты
+            // РўРµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕСЂРґРёРЅР°С‚С‹
             textureVertexSphere.push_back( i * stepTexture);
             textureVertexSphere.push_back( 2.0 *j * stepTexture);
 
-            // Координаты привязки
+            // РљРѕРѕСЂРґРёРЅР°С‚С‹ РїСЂРёРІСЏР·РєРё
             coordVertexSphere.push_back( xc + r * cos(theta) * sin(phi+stepAngle));
             coordVertexSphere.push_back( yc + r * sin(theta));
             coordVertexSphere.push_back( zc + r * cos(theta) * cos(phi+stepAngle));
-            // Нормаль
+            // РќРѕСЂРјР°Р»СЊ
             normalVertexSphere.push_back( cos(theta) * sin(phi+stepAngle));
             normalVertexSphere.push_back( sin(theta));
             normalVertexSphere.push_back( cos(theta) * cos(phi+stepAngle));
-            // Текстурные кординаты
+            // РўРµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕСЂРґРёРЅР°С‚С‹
             textureVertexSphere.push_back( (i+1) * stepTexture);
             textureVertexSphere.push_back( 2.0 *j * stepTexture);
 
-            // Координаты привязки
+            // РљРѕРѕСЂРґРёРЅР°С‚С‹ РїСЂРёРІСЏР·РєРё
             coordVertexSphere.push_back( xc + r * cos(theta+stepAngle) * sin(phi+stepAngle));
             coordVertexSphere.push_back( yc + r * sin(theta+stepAngle));
             coordVertexSphere.push_back( zc + r * cos(theta+stepAngle) * cos(phi+stepAngle));
-            // Нормаль
+            // РќРѕСЂРјР°Р»СЊ
             normalVertexSphere.push_back( cos(theta+stepAngle) * sin(phi+stepAngle));
             normalVertexSphere.push_back( sin(theta+stepAngle));
             normalVertexSphere.push_back( cos(theta+stepAngle) * cos(phi+stepAngle));
-            // Текстурные кординаты
+            // РўРµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕСЂРґРёРЅР°С‚С‹
             textureVertexSphere.push_back( (i+1) * stepTexture);
             textureVertexSphere.push_back( 2.0 * (j+1)* stepTexture);
         }
@@ -595,14 +595,14 @@ void CMap3d::createSphere(GLdouble xc, GLdouble yc, GLdouble zc, GLdouble r)
 
 void CMap3d::loadTexture()
 {
-    // Макрос для чтения беззнакового целого значения LITTLE ENDIAN (платформонезависимый)
+    // РњР°РєСЂРѕСЃ РґР»СЏ С‡С‚РµРЅРёСЏ Р±РµР·Р·РЅР°РєРѕРІРѕРіРѕ С†РµР»РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ LITTLE ENDIAN (РїР»Р°С‚С„РѕСЂРјРѕРЅРµР·Р°РІРёСЃРёРјС‹Р№)
     #define LE_UINT32(a)((unsigned int)((unsigned char)(a)[3] << 24) | ((unsigned char)(a)[2] << 16) | ((unsigned char)(a)[1] << 8) | ((unsigned char)(a)[0]))
 
     #define HEADER_PNG  0x474E5089UL
     #define HEADER_JPG  0xE0FFD8FFUL
     #define HEADER_GIF  0x38464947UL
-    // Чтение сжатой тестуры в формате DDS
-    // Источник: http://opengl-tutorial.blogspot.com/p/5.html
+    // Р§С‚РµРЅРёРµ СЃР¶Р°С‚РѕР№ С‚РµСЃС‚СѓСЂС‹ РІ С„РѕСЂРјР°С‚Рµ DDS
+    // РСЃС‚РѕС‡РЅРёРє: http://opengl-tutorial.blogspot.com/p/5.html
     //           https://pastebin.com/XanZ4pP7
     //           https://coderoad.ru/33459066/%D0%97%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D1%83%D1%80-DDS
 
@@ -611,8 +611,8 @@ void CMap3d::loadTexture()
     #define FOURCC_DXT3 0x33545844UL // Equivalent to "DXT3" in ASCII
     #define FOURCC_DXT5 0x35545844UL // Equivalent to "DXT5" in ASCII
 
-    // Константы форматов сжатых текстур для glCompressedTexImage2D
-    // Источник: https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_compression_s3tc.txt
+    // РљРѕРЅСЃС‚Р°РЅС‚С‹ С„РѕСЂРјР°С‚РѕРІ СЃР¶Р°С‚С‹С… С‚РµРєСЃС‚СѓСЂ РґР»СЏ glCompressedTexImage2D
+    // РСЃС‚РѕС‡РЅРёРє: https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_compression_s3tc.txt
     #define GL_COMPRESSED_RGB_S3TC_DXT1_EXT    0x83F0U
     #define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT   0x83F1U
     #define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT   0x83F2U
@@ -630,15 +630,15 @@ void CMap3d::loadTexture()
 
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
 
-        // Выделение памяти и инициализация параметров текстуры
+        // Р’С‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё Рё РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ С‚РµРєСЃС‚СѓСЂС‹
         glGenTextures(1, &earthText);
         glBindTexture(GL_TEXTURE_2D, earthText);
 
-        // При фильтрации игнорируются тексели, выходящие за границу текстуры для s координаты
+        // РџСЂРё С„РёР»СЊС‚СЂР°С†РёРё РёРіРЅРѕСЂРёСЂСѓСЋС‚СЃСЏ С‚РµРєСЃРµР»Рё, РІС‹С…РѕРґСЏС‰РёРµ Р·Р° РіСЂР°РЅРёС†Сѓ С‚РµРєСЃС‚СѓСЂС‹ РґР»СЏ s РєРѕРѕСЂРґРёРЅР°С‚С‹
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        // При фильтрации игнорируются тексели, выходящие за границу текстуры для t координаты
+        // РџСЂРё С„РёР»СЊС‚СЂР°С†РёРё РёРіРЅРѕСЂРёСЂСѓСЋС‚СЃСЏ С‚РµРєСЃРµР»Рё, РІС‹С…РѕРґСЏС‰РёРµ Р·Р° РіСЂР°РЅРёС†Сѓ С‚РµРєСЃС‚СѓСЂС‹ РґР»СЏ t РєРѕРѕСЂРґРёРЅР°С‚С‹
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        // Цвет текселя полностью замещает цвет фрагмента фигуры
+        // Р¦РІРµС‚ С‚РµРєСЃРµР»СЏ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РјРµС‰Р°РµС‚ С†РІРµС‚ С„СЂР°РіРјРµРЅС‚Р° С„РёРіСѓСЂС‹
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
         switch (LE_UINT32(array.data()))
@@ -648,22 +648,22 @@ void CMap3d::loadTexture()
         case HEADER_GIF:
             {
                 QImage  image = QImage::fromData(array);
-                // Проверка размеров текстуры
+                // РџСЂРѕРІРµСЂРєР° СЂР°Р·РјРµСЂРѕРІ С‚РµРєСЃС‚СѓСЂС‹
                 if (image.width() <= maxTexSize && image.height() <= maxTexSize)
                 {
-                    // Конвертация в формат OpenGL
+                    // РљРѕРЅРІРµСЂС‚Р°С†РёСЏ РІ С„РѕСЂРјР°С‚ OpenGL
                     image = QGLWidget::convertToGLFormat(image);
-                    // Дополнительные параметры текстурного объекта
-                    // Задание линейную фильтрацию вблизи:
+                    // Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ С‚РµРєСЃС‚СѓСЂРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+                    // Р—Р°РґР°РЅРёРµ Р»РёРЅРµР№РЅСѓСЋ С„РёР»СЊС‚СЂР°С†РёСЋ РІР±Р»РёР·Рё:
                     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                    // Задание линейной фильтрации вдали:
+                    // Р—Р°РґР°РЅРёРµ Р»РёРЅРµР№РЅРѕР№ С„РёР»СЊС‚СЂР°С†РёРё РІРґР°Р»Рё:
                     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                    // Загрузка текстуры в память видеокарты
+                    // Р—Р°РіСЂСѓР·РєР° С‚РµРєСЃС‚СѓСЂС‹ РІ РїР°РјСЏС‚СЊ РІРёРґРµРѕРєР°СЂС‚С‹
                     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
                 }
                 else
                 {
-                    MESSAGE(tr("Размер текстуры %1x%2 превышает поддерживаемый размер текстуры %3").arg(image.width()).arg(image.height()).arg(maxTexSize));
+                    MESSAGE(tr("Р Р°Р·РјРµСЂ С‚РµРєСЃС‚СѓСЂС‹ %1x%2 РїСЂРµРІС‹С€Р°РµС‚ РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Р№ СЂР°Р·РјРµСЂ С‚РµРєСЃС‚СѓСЂС‹ %3").arg(image.width()).arg(image.height()).arg(maxTexSize));
                 }
                 }
             break;
@@ -715,10 +715,10 @@ void CMap3d::loadTexture()
                     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
                     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-                    // Проверка размеров текстуры
+                    // РџСЂРѕРІРµСЂРєР° СЂР°Р·РјРµСЂРѕРІ С‚РµРєСЃС‚СѓСЂС‹
                     if (width <= (unsigned int)maxTexSize && height <= (unsigned int)maxTexSize)
                     {
-                        // Загрузка текстуры в память видеокарты
+                        // Р—Р°РіСЂСѓР·РєР° С‚РµРєСЃС‚СѓСЂС‹ РІ РїР°РјСЏС‚СЊ РІРёРґРµРѕРєР°СЂС‚С‹
                         for (unsigned int level = 0; level < mipMapCount; ++level)
                         {
                            int size = ((width+3)/4)*((height+3)/4)*blockSize;
@@ -735,19 +735,19 @@ void CMap3d::loadTexture()
                     }
                     else
                     {
-                        MESSAGE(tr("Размер текстуры %1x%2 превышает поддерживаемый размер текстуры %3").arg(width).arg(height).arg(maxTexSize));
+                        MESSAGE(tr("Р Р°Р·РјРµСЂ С‚РµРєСЃС‚СѓСЂС‹ %1x%2 РїСЂРµРІС‹С€Р°РµС‚ РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Р№ СЂР°Р·РјРµСЂ С‚РµРєСЃС‚СѓСЂС‹ %3").arg(width).arg(height).arg(maxTexSize));
                     }
                  }
                  else
                  {
-                     MESSAGE(tr("Формат сжатой текстуры S3TC 0x%1 (0x%2) не поддерживается OpenGL").arg(format, 0, 16).arg(fourCC, 0, 16));
+                     MESSAGE(tr("Р¤РѕСЂРјР°С‚ СЃР¶Р°С‚РѕР№ С‚РµРєСЃС‚СѓСЂС‹ S3TC 0x%1 (0x%2) РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ OpenGL").arg(format, 0, 16).arg(fourCC, 0, 16));
                  }
             }
         break;
         } // case HEADER_DDS:
         default:
             {
-                MESSAGE(tr("Формат текстуры 0x%1 не поддерживается загрузчиком текстур").arg(LE_UINT32(array.data()), 0, 16));
+                MESSAGE(tr("Р¤РѕСЂРјР°С‚ С‚РµРєСЃС‚СѓСЂС‹ 0x%1 РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ Р·Р°РіСЂСѓР·С‡РёРєРѕРј С‚РµРєСЃС‚СѓСЂ").arg(LE_UINT32(array.data()), 0, 16));
                 break;
             }
         }
@@ -756,7 +756,7 @@ void CMap3d::loadTexture()
     }
     else
     {
-        MESSAGE(tr("Ошибка чтения текстуры из ресурсов"));
+        MESSAGE(tr("РћС€РёР±РєР° С‡С‚РµРЅРёСЏ С‚РµРєСЃС‚СѓСЂС‹ РёР· СЂРµСЃСѓСЂСЃРѕРІ"));
     }
 }
 
@@ -809,7 +809,7 @@ void CMap3d::paintGL()
 
     setModelViewMatrix();
 
-    //! Вывод сообщения об ошибке
+    //! Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ
     if (!Message.isEmpty())
     {
         qglColor(Qt::white);
@@ -817,16 +817,16 @@ void CMap3d::paintGL()
     }
     else
 
-    //! Штатное отображение карты
+    //! РЁС‚Р°С‚РЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РєР°СЂС‚С‹
     {
         qglColor(Qt::white);
 
 
-        // Отображение освещения
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РѕСЃРІРµС‰РµРЅРёСЏ
         if(isVisibleObject[show_light])
             drawSunLight();
 
-        // Отображение сферы с наложенной на неё текстурой.
+        // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃС„РµСЂС‹ СЃ РЅР°Р»РѕР¶РµРЅРЅРѕР№ РЅР° РЅРµС‘ С‚РµРєСЃС‚СѓСЂРѕР№.
         drawEarth();
 
         glDisable(GL_LIGHTING);
@@ -840,7 +840,7 @@ void CMap3d::paintGL()
 
 void CMap3d::drawEarth()
 {
-    // Отрисовка сферы
+    // РћС‚СЂРёСЃРѕРІРєР° СЃС„РµСЂС‹
     glEnable(GL_TEXTURE_2D);
     glColor4d(1.0, 1.0, 1.0, 0.0);
 
@@ -866,48 +866,48 @@ void CMap3d::drawEarth()
 void CMap3d::drawSunLight()
 {
 
-	// РЕШЕНИЕ ЗАДАЧИ ОБ ОПРЕДЕЛЕНИИ ПОДСОЛНЕЧНОЙ ТОЧКИ
-	// Монтенбрюк О., Пфлегер Т. Астрономия на персональном компьютере. Питер, 2002. 320 с.
+	// Р Р•РЁР•РќРР• Р—РђР”РђР§Р РћР‘ РћРџР Р•Р”Р•Р›Р•РќРР РџРћР”РЎРћР›РќР•Р§РќРћР™ РўРћР§РљР
+	// РњРѕРЅС‚РµРЅР±СЂСЋРє Рћ., РџС„Р»РµРіРµСЂ Рў. РђСЃС‚СЂРѕРЅРѕРјРёСЏ РЅР° РїРµСЂСЃРѕРЅР°Р»СЊРЅРѕРј РєРѕРјРїСЊСЋС‚РµСЂРµ. РџРёС‚РµСЂ, 2002. 320 СЃ.
 	// Jean Meeus, Astronomical Algorithms, Second Edition. Publisher: Willmann-Bell 1999
 	// http://www.astroclub.kiev.ua/forum/index.php?topic=5525.0
 
-	// Определение модифицированной Юлианской Даты
+	// РћРїСЂРµРґРµР»РµРЅРёРµ РјРѕРґРёС„РёС†РёСЂРѕРІР°РЅРЅРѕР№ Р®Р»РёР°РЅСЃРєРѕР№ Р”Р°С‚С‹
     double mjd = std::time(NULL)/86400.0 + 40587.0,
 
-	// Вычисление гринвичского среднего звездного времени GMST, рад
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РіСЂРёРЅРІРёС‡СЃРєРѕРіРѕ СЃСЂРµРґРЅРµРіРѕ Р·РІРµР·РґРЅРѕРіРѕ РІСЂРµРјРµРЅРё GMST, СЂР°Рґ
 	mjd0  = (int)mjd,
 	UT1   = 86400.0*(mjd-mjd0),
 	T0    = (mjd0-51544.5)/36525,
 	T     = (mjd - 51544.5)/36525,
 	GMST  = (24110.54841 + 8640184.812866*T0 + (0.093104-6.2e-6*T0)*T0*T0 + 1.002737909350795*UT1) * 2.0*M_PI/86400;
 
-	// Положение Солнца в эклиптической системе координат:
-	// Средняя аномалия Солнца, рад
+	// РџРѕР»РѕР¶РµРЅРёРµ РЎРѕР»РЅС†Р° РІ СЌРєР»РёРїС‚РёС‡РµСЃРєРѕР№ СЃРёСЃС‚РµРјРµ РєРѕРѕСЂРґРёРЅР°С‚:
+	// РЎСЂРµРґРЅСЏСЏ Р°РЅРѕРјР°Р»РёСЏ РЎРѕР»РЅС†Р°, СЂР°Рґ
     double M0  = fmod(357.52910 + (35999.05030 - (0.0001559 + 0.00000048*T)*T)*T, 360.0) * M_DEG_TO_RAD,
-	// Геометрическая средняя долгота Солнца, приведённая к среднему текущему равноденствию, рад
+	// Р“РµРѕРјРµС‚СЂРёС‡РµСЃРєР°СЏ СЃСЂРµРґРЅСЏСЏ РґРѕР»РіРѕС‚Р° РЎРѕР»РЅС†Р°, РїСЂРёРІРµРґС‘РЅРЅР°СЏ Рє СЃСЂРµРґРЅРµРјСѓ С‚РµРєСѓС‰РµРјСѓ СЂР°РІРЅРѕРґРµРЅСЃС‚РІРёСЋ, СЂР°Рґ
 	L0  = 280.46645 + (36000.76983 + 0.0003032*T)*T,
-	// Истинная долгота Солнца (Геометрическая средняя долгота Солнца + Положение центра диска Солнца), рад
+	// РСЃС‚РёРЅРЅР°СЏ РґРѕР»РіРѕС‚Р° РЎРѕР»РЅС†Р° (Р“РµРѕРјРµС‚СЂРёС‡РµСЃРєР°СЏ СЃСЂРµРґРЅСЏСЏ РґРѕР»РіРѕС‚Р° РЎРѕР»РЅС†Р° + РџРѕР»РѕР¶РµРЅРёРµ С†РµРЅС‚СЂР° РґРёСЃРєР° РЎРѕР»РЅС†Р°), СЂР°Рґ
 	L   = fmod(L0 + (1.914600 - (0.004817*T + 0.00014*T)*T)* sin(M0) +
 			(0.019993 - 0.000101*T)* sin(2*M0) + 0.000290* sin(3*M0), 360.0) * M_DEG_TO_RAD,
-	// Угол наклона оси вращения Земли, рад
+	// РЈРіРѕР» РЅР°РєР»РѕРЅР° РѕСЃРё РІСЂР°С‰РµРЅРёСЏ Р—РµРјР»Рё, СЂР°Рґ
 	EPS = ( 23.43929111-(46.8150+(0.00059-0.001813*T)*T)*T/3600.0) * M_DEG_TO_RAD,
 
-	// Экваториальные геоцентрические координаты Солнца:
-	// Прямое восхождение Солнца (Долгота подсолнечной точки без учета суточного вращения)
+	// Р­РєРІР°С‚РѕСЂРёР°Р»СЊРЅС‹Рµ РіРµРѕС†РµРЅС‚СЂРёС‡РµСЃРєРёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РЎРѕР»РЅС†Р°:
+	// РџСЂСЏРјРѕРµ РІРѕСЃС…РѕР¶РґРµРЅРёРµ РЎРѕР»РЅС†Р° (Р”РѕР»РіРѕС‚Р° РїРѕРґСЃРѕР»РЅРµС‡РЅРѕР№ С‚РѕС‡РєРё Р±РµР· СѓС‡РµС‚Р° СЃСѓС‚РѕС‡РЅРѕРіРѕ РІСЂР°С‰РµРЅРёСЏ)
 	Ra  = atan2(sin(L) * cos(EPS), cos(L)),
-	// Склонение Солнца (Широта подсолнечной точки)
+	// РЎРєР»РѕРЅРµРЅРёРµ РЎРѕР»РЅС†Р° (РЁРёСЂРѕС‚Р° РїРѕРґСЃРѕР»РЅРµС‡РЅРѕР№ С‚РѕС‡РєРё)
 	Dec = asin(sin(L) * sin(EPS));
 
-	// Положение Солнца (направление)
+	// РџРѕР»РѕР¶РµРЅРёРµ РЎРѕР»РЅС†Р° (РЅР°РїСЂР°РІР»РµРЅРёРµ)
 	float SunPos[] = { cos(Dec)*sin(Ra-GMST), sin(Dec), cos(Dec)*cos(Ra-GMST), 0.0f };
-	// Фоновое освещение
+	// Р¤РѕРЅРѕРІРѕРµ РѕСЃРІРµС‰РµРЅРёРµ
 	float fAmbientShadow[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 
-	// Начальная позиция источника света и интенсивность тёмной части.
+	// РќР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ РёСЃС‚РѕС‡РЅРёРєР° СЃРІРµС‚Р° Рё РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ С‚С‘РјРЅРѕР№ С‡Р°СЃС‚Рё.
 	glLightfv(GL_LIGHT0, GL_POSITION, SunPos);
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, fAmbientShadow);
 
-	// Включаем источник света.
+	// Р’РєР»СЋС‡Р°РµРј РёСЃС‚РѕС‡РЅРёРє СЃРІРµС‚Р°.
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
